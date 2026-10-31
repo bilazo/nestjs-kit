@@ -1,0 +1,75 @@
+{
+  "name": "@bilazo/nestjs-kit",
+  "version": "0.0.0",
+  "description": "Shared NestJS infrastructure: HTTP filters, interceptors, guards, decorators, exceptions, and reusable modules.",
+  "keywords": [
+    "kit",
+    "nest",
+    "nestjs"
+  ],
+  "homepage": "https://github.com/bilazo/nestjs-kit#readme",
+  "bugs": {
+    "url": "https://github.com/bilazo/nestjs-kit/issues"
+  },
+  "license": "MIT",
+  "author": "bilazo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilazo/nestjs-kit.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./http": {
+      "types": "./dist/http/index.d.mts",
+      "import": "./dist/http/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "typecheck": "tsc --noEmit",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
+    "changeset:release": "pnpm build && changeset publish",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@bilazo/oxc-config": "^1.0.4",
+    "@changesets/cli": "^2.31.1",
+    "@nestjs/common": "^12.0.0",
+    "@nestjs/core": "^12.0.0",
+    "@types/node": "^24.19.2",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.89.0",
+    "publint": "^0.3.25",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.0",
+    "tsdown": "^0.23.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^12.0.0",
+    "@nestjs/core": "^12.0.0",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

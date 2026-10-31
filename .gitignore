@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build & Misc & Local tooling
+dist/
+build/
+.output/
+.vite/
+.turbo/
+.cache/
+*.tsbuildinfo
+
+# Test output
+coverage/
+.vitest/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# NPM tokens
+.npmrc
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Generated documentation / metadata
+.generated/
