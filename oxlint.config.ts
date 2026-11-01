@@ -13,7 +13,14 @@ export default defineConfig({
     {
       files: ['**/*.spec.ts'],
       rules: {
+        'max-classes-per-file': 'off',
         'vitest/prefer-lowercase-title': 'off',
+      },
+    },
+    {
+      files: ['**/*.module.ts'],
+      rules: {
+        'typescript/no-extraneous-class': 'off',
       },
     },
   ],
