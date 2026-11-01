@@ -3,4 +3,6 @@ import { defineConfig } from 'oxfmt'
 
 export default defineConfig({
   ...format(),
+
+  ignorePatterns: ['.changeset/**', 'README.md', 'CHANGELOG.md'],
 })
