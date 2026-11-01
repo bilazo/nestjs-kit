@@ -1,5 +1,11 @@
 # @bilazo/nestjs-kit
 
+## 0.0.4
+
+### Patch Changes
+
+- 31862e0: Fix import
+
 ## 0.0.3
 
 ### Patch Changes
