@@ -1,11 +1,11 @@
 import { Injectable, StreamableFile } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
 import { map } from 'rxjs'
 
 import { ENVELOPE_ENABLED } from '../constants.js'
 
 import type { ApiResponse } from '../types/api-response.type.js'
 import type { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common'
-import type { Reflector } from '@nestjs/core'
 import type { Observable } from 'rxjs'
 
 /**
