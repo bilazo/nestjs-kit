@@ -9,7 +9,7 @@ for (const file of globSync('src/**/*.ts')) {
   const normalized = file.replaceAll('\\', '/')
   if (normalized.endsWith('.spec.ts')) continue
   if (normalized.endsWith('.d.ts')) continue
-  const name = normalized.replace(/^src\//, '').replace(/\.ts$/, '')
+  const name = normalized.replace(/^src\//u, '').replace(/\.ts$/u, '')
   entry[name] = normalized
 }
 
@@ -23,11 +23,6 @@ export default defineConfig({
   target: 'es2024',
   publint: true,
   deps: {
-    neverBundle: [
-      '@nestjs/common',
-      '@nestjs/core',
-      'reflect-metadata',
-      'rxjs',
-    ],
+    neverBundle: ['@nestjs/common', '@nestjs/core', 'reflect-metadata', 'rxjs'],
   },
 })
