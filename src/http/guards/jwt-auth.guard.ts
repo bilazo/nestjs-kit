@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 
 import type { JwtPayload } from '../types/jwt-payload.js'
 import type { AuthenticatedRequest } from '../types/request.type.js'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
-import type { JwtService } from '@nestjs/jwt'
 
 const BEARER_PREFIX = 'Bearer '
 
@@ -18,7 +18,7 @@ export class JwtAuthGuard implements CanActivate {
     if (!header || !header.startsWith(BEARER_PREFIX)) {
       throw new UnauthorizedException({
         code: 'MISSING_TOKEN',
-        message: 'برای دسترسی، ابتدا وارد شوید',
+        message: 'توکن را با فرمت Bearer ارسال کنید',
       })
     }
 
