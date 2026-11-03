@@ -1,6 +1,6 @@
 {
   "name": "@bilazo/nestjs-kit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Shared NestJS infrastructure: HTTP filters, interceptors, guards, decorators, exceptions, and reusable modules.",
   "keywords": [
     "kit",
