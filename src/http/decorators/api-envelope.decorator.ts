@@ -1,5 +1,6 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common'
 import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger'
+import { z } from 'zod'
 
 import { ENVELOPE_ENABLED } from '../constants.js'
 
@@ -13,6 +14,8 @@ export interface ApiEnvelopeOptions {
   /** Description shown in Swagger UI. */
   description?: string
 }
+
+type ZodModel = z.ZodType
 
 /**
  * Enables `{ data }` envelope on this route AND documents it in Swagger.
@@ -36,12 +39,12 @@ export interface ApiEnvelopeOptions {
  * raw(): Promise<unknown> { ... }
  */
 export function ApiEnvelope<T>(
-  model: Type<T>,
+  model: Type<T> | ZodModel,
   options?: ApiEnvelopeOptions,
 ): MethodDecorator & ClassDecorator
 export function ApiEnvelope(): MethodDecorator & ClassDecorator
 export function ApiEnvelope<T>(
-  model?: Type<T>,
+  model?: Type<T> | ZodModel,
   options: ApiEnvelopeOptions = {},
 ): MethodDecorator & ClassDecorator {
   if (!model) {
@@ -49,14 +52,16 @@ export function ApiEnvelope<T>(
   }
 
   const { isArray = false, status = 200, description } = options
-
-  const dataSchema = isArray
-    ? { type: 'array', items: { $ref: getSchemaPath(model) } }
-    : { $ref: getSchemaPath(model) }
+  const isZod = isZodSchema(model)
+  const dataSchema = wrapArray(
+    isZod ? z.toJSONSchema(model) : { $ref: getSchemaPath(model) },
+    isArray,
+  )
 
   return applyDecorators(
     SetMetadata(ENVELOPE_ENABLED, true),
-    ApiExtraModels(model),
+    // ApiExtraModels فقط برای کلاس‌ها معنی داره:
+    ...(isZod ? [] : [ApiExtraModels(model as Type<T>)]),
     ApiResponse({
       status,
       description,
@@ -67,4 +72,13 @@ export function ApiEnvelope<T>(
       },
     }),
   )
+}
+
+/** یک schema را در صورت نیاز داخل آرایه می‌پیچد. */
+function wrapArray(items: Record<string, unknown>, isArray: boolean): Record<string, unknown> {
+  return isArray ? { type: 'array', items } : items
+}
+
+function isZodSchema(value: unknown): value is ZodModel {
+  return value instanceof z.ZodType
 }

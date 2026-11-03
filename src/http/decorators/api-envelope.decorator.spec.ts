@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { describe, expect, it } from 'vitest'
+import z from 'zod'
 
 import { ENVELOPE_ENABLED } from '../constants.js'
 import { ApiEnvelope } from './api-envelope.decorator.js'
@@ -103,5 +104,72 @@ describe('ApiEnvelope', () => {
 
     expect(getEnvelopeMeta(Controller.prototype, 'raw')).toBe(true)
     expect(getResponses(Controller.prototype, 'raw')).toBeUndefined()
+  })
+})
+
+describe('ApiEnvelope (Zod)', () => {
+  const UserSchema = z.object({
+    id: z.uuid(),
+    email: z.email(),
+  })
+
+  it('sets the envelope metadata on the handler', () => {
+    class Controller {
+      @ApiEnvelope(UserSchema)
+      getOne() {
+        return { id: '1', email: 'x' }
+      }
+    }
+
+    expect(getEnvelopeMeta(Controller.prototype, 'getOne')).toBe(true)
+  })
+
+  it('documents the schema inline (no $ref)', () => {
+    class Controller {
+      @ApiEnvelope(UserSchema)
+      getOne() {
+        return { id: '1', email: 'x' }
+      }
+    }
+
+    const responses = getResponses(Controller.prototype, 'getOne')
+
+    expect(responses?.['200']).toMatchObject({
+      schema: {
+        type: 'object',
+        required: ['data'],
+        properties: {
+          data: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', format: 'uuid' },
+              email: { type: 'string' },
+            },
+          },
+        },
+      },
+    })
+  })
+
+  it('documents an array envelope', () => {
+    class Controller {
+      @ApiEnvelope(UserSchema, { isArray: true })
+      list() {
+        return []
+      }
+    }
+
+    const responses = getResponses(Controller.prototype, 'list')
+
+    expect(responses?.['200']).toMatchObject({
+      schema: {
+        properties: {
+          data: {
+            type: 'array',
+            items: { type: 'object' },
+          },
+        },
+      },
+    })
   })
 })
