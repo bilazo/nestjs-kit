@@ -1,5 +1,11 @@
 # @bilazo/nestjs-kit
 
+## 0.0.5
+
+### Patch Changes
+
+- 6bd3860: Add zod validation
+
 ## 0.0.4
 
 ### Patch Changes
