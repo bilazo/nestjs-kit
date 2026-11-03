@@ -1,5 +1,11 @@
 # @bilazo/nestjs-kit
 
+## 0.0.6
+
+### Patch Changes
+
+- 1819f88: Add zod to ApiEnvelope
+
 ## 0.0.5
 
 ### Patch Changes
