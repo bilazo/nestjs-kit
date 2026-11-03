@@ -36,6 +36,9 @@ const STATUS_ERROR_CODES = new Map<number, string>([
 // Plain number so comparison against `status: number` is type-safe.
 const SERVER_ERROR_MIN = 500
 
+const VALIDATION_MSG_WITH_PATH =
+  /^[a-zA-Z_$][\w$]*(?:\.[a-zA-Z_$][\w$]*)*:\s+([\u0600-\u06FF].*)$/su
+
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name)
@@ -75,6 +78,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
     return HttpStatus.INTERNAL_SERVER_ERROR
   }
 
+  private stripPathPrefix(message: string): string {
+    const match = VALIDATION_MSG_WITH_PATH.exec(message)
+    return match?.[1] ?? message
+  }
+
   private normalize(exception: unknown, status: number): NormalizedError {
     if (exception instanceof HttpException) {
       const res = exception.getResponse()
@@ -91,8 +99,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
         if (Array.isArray(res.message)) {
           const first = res.message[0]
           return {
-            code,
-            message: typeof first === 'string' ? first : 'داده‌های ورودی نامعتبر است',
+            code: 'VALIDATION_FAILED',
+            message:
+              typeof first === 'string' ? this.stripPathPrefix(first) : 'داده‌های ورودی نامعتبر است',
             details: res.message,
           }
         }

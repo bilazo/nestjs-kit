@@ -26,6 +26,10 @@
       "types": "./dist/http/index.d.mts",
       "import": "./dist/http/index.mjs"
     },
+    "./zod-i18n-fa": {
+      "types": "./dist/zod-i18n-fa/index.d.mts",
+      "import": "./dist/zod-i18n-fa/index.mjs"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -63,7 +67,8 @@
     "rxjs": "^7.8.2",
     "tsdown": "^0.23.4",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
   },
   "peerDependencies": {
     "@nestjs/common": "^12.3.2",

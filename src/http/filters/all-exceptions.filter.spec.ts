@@ -131,7 +131,7 @@ describe('AllExceptionsFilter', () => {
 
       expect(res.body).toMatchObject({
         error: {
-          code: 'BAD_REQUEST',
+          code: 'VALIDATION_FAILED',
           message: 'email invalid',
           details: ['email invalid', 'password too short'],
         },
