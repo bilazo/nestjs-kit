@@ -1,5 +1,11 @@
 # @bilazo/nestjs-kit
 
+## 0.0.7
+
+### Patch Changes
+
+- b7461ae: Update module import to global
+
 ## 0.0.6
 
 ### Patch Changes
