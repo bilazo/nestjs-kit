@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { describe, expect, it } from 'vitest'
-import z from 'zod'
+import { z } from 'zod'
 
 import { ENVELOPE_ENABLED } from '../constants.js'
 import { ApiEnvelope } from './api-envelope.decorator.js'

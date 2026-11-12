@@ -1,10 +1,8 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { AllExceptionsFilter } from './filters/all-exceptions.filter.js'
 import { TransformInterceptor } from './interceptors/transform.interceptor.js'
-
-import type { DynamicModule } from '@nestjs/common'
 
 /**
  * Registers `AllExceptionsFilter` and `TransformInterceptor` globally.
@@ -16,21 +14,16 @@ import type { DynamicModule } from '@nestjs/common'
  *
  * @example
  * @Module({
- *   imports: [HttpKitModule.forRoot()],
+ *   imports: [HttpKitModule],
  * })
  * export class AppModule {}
  */
-@Module({})
-export class HttpKitModule {
-  static forRoot(): DynamicModule {
-    return {
-      module: HttpKitModule,
-      global: true,
-      providers: [
-        { provide: APP_FILTER, useClass: AllExceptionsFilter },
-        // Registered globally but only ACTS on routes with @ApiEnvelope().
-        { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
-      ],
-    }
-  }
-}
+@Global()
+@Module({
+  providers: [
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    // Registered globally but only ACTS on routes with @ApiEnvelope().
+    { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
+  ],
+})
+export class HttpKitModule {}
