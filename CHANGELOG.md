@@ -1,5 +1,11 @@
 # @bilazo/nestjs-kit
 
+## 0.0.8
+
+### Patch Changes
+
+- 8ad2d9c: Fix zod schema builder
+
 ## 0.0.7
 
 ### Patch Changes
