@@ -3,6 +3,11 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { AllExceptionsFilter } from './filters/all-exceptions.filter.js'
 import { TransformInterceptor } from './interceptors/transform.interceptor.js'
+import { installZodDefsSwaggerFix } from './swagger/zod-defs-fix.js'
+
+// نصب یک‌باره و سراسری. چون این فایل در AppModule ایمپورت می‌شه،
+// قبل از bootstrap و قبل از فراخوانی createDocument فعال می‌شه.
+installZodDefsSwaggerFix()
 
 /**
  * Registers `AllExceptionsFilter` and `TransformInterceptor` globally.
